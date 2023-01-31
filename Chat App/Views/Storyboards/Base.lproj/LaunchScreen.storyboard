@@ -16,7 +16,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="HQR-Ef-GdT">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="HQR-Ef-GdT">
                                 <rect key="frame" x="148.66666666666666" y="378" width="96" height="96"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="96" id="95A-dc-foF"/>
@@ -38,6 +38,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="logo" width="96" height="96"/>
         <namedColor name="PrimaryColor">
             <color red="0.18823529410000001" green="0.31372549020000001" blue="0.94117647059999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
