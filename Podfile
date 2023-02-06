@@ -7,4 +7,7 @@ target 'Chat App' do
 
   # Pods for Chat App
 	pod 'FirebaseAuth'	
+	pod 'FirebaseFirestore'
+	pod 'JGProgressHUD'
+	pod 'FirebaseDatabase'
 end
