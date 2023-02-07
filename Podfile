@@ -10,4 +10,5 @@ target 'Chat App' do
 	pod 'FirebaseFirestore'
 	pod 'JGProgressHUD'
 	pod 'FirebaseDatabase'
+	pod 'IQKeyboardManagerSwift'
 end

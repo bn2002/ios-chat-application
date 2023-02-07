@@ -18,13 +18,13 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Login"
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Register", style: .done, target: self, action: #selector(didTapRegister))
+        title = "Đăng nhập"
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Đăng ký", style: .done, target: self, action: #selector(didTapRegister))
         
         // Email Text Field
-        //emailTextField.layer.cornerRadius = 12
+        emailTextField.layer.cornerRadius = 12
         emailTextField.layer.borderWidth = 1
-        //emailTextField.layer.borderColor = UIColor.lightGray.cgColor
+        emailTextField.layer.borderColor = UIColor.lightGray.cgColor
         // Password Text Field
         passwordTextField.layer.cornerRadius = 12
         passwordTextField.layer.borderWidth = 1
@@ -56,7 +56,6 @@ class LoginViewController: UIViewController {
                 strongSelf.spinner.dismiss(animated: true)
             }
             
-            DatabaseManager.shared.insertUser()
             DatabaseManager.shared.getDataFor(path: "doanhcms@gmail.com") { result in
                 switch result {
                 case .success(let data):

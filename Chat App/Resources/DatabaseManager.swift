@@ -7,14 +7,13 @@
 
 import Foundation
 import FirebaseFirestore
-import FirebaseDatabase
+import FirebaseCore
 
 final class DatabaseManager {
     
     public static let shared = DatabaseManager()
     
     private let db = Firestore.firestore()
-    private let database = Database.database().reference()
     
     static func safeEmail(emailAddress: String) -> String {
         var safeEmail = emailAddress.replacingOccurrences(of: ".", with: "-")
@@ -51,14 +50,32 @@ extension DatabaseManager {
         }
     }
     
-    public func insertUser() {
-//        db.collection("users").addDocument(data: [
-//            "first_name": "Doanh",
-//            "last_name": "Duy",
-//            "username": "test12@gmail.com"
-//        ]) { error in
-//            print("Success")
-//        }
-        
+    public func isUserExist(email: String, completion: @escaping (Bool) -> Void ) {
+        db.collection("users").whereField("email", isEqualTo: email).limit(to: 1).getDocuments { querySnapshot, error in
+            
+            if let snapshot = querySnapshot {
+                completion(snapshot.documents.count > 0)
+                return
+            }
+            
+            completion(false)
+            
+        }
+    }
+    
+    public func insertUser(with user: User, completion: @escaping (Bool) -> Void) {
+        db.collection("users").addDocument(data: [
+            "firstname": user.firstname,
+            "lastname": user.lastname,
+            "email": user.email,
+            "photoUrl": "",
+        ]) { error in
+            if let _ = error {
+                completion(false)
+                return
+            }
+            
+            completion(true)
+        }
     }
 }

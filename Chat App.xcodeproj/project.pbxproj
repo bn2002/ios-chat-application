@@ -24,6 +24,7 @@
 		8B7878C829891881003B43FB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8B7878C729891881003B43FB /* GoogleService-Info.plist */; };
 		8B88256929890529007AA204 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B88256729890529007AA204 /* LoginViewController.swift */; };
 		8BE1C7E22990E55A001F3688 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE1C7E12990E55A001F3688 /* DatabaseManager.swift */; };
+		8BE1C7E729923A22001F3688 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE1C7E629923A22001F3688 /* User.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,6 +48,7 @@
 		8B7878C729891881003B43FB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8B88256729890529007AA204 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		8BE1C7E12990E55A001F3688 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
+		8BE1C7E629923A22001F3688 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		9FBB1BE1A3282944DA0E9CBA /* Pods-Chat App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chat App.release.xcconfig"; path = "Target Support Files/Pods-Chat App/Pods-Chat App.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -92,6 +94,7 @@
 		8B5C45602988F0F800F213EA /* Chat App */ = {
 			isa = PBXGroup;
 			children = (
+				8BE1C7E829923C68001F3688 /* Utils */,
 				8B5C45782988F20900F213EA /* Resources */,
 				8B5C45772988F13A00F213EA /* Controllers */,
 				8B5C45762988F13300F213EA /* Views */,
@@ -106,6 +109,7 @@
 		8B5C45752988F12600F213EA /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				8BE1C7E629923A22001F3688 /* User.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -159,6 +163,13 @@
 				8B5C456C2988F0F800F213EA /* LaunchScreen.storyboard */,
 			);
 			path = Storyboards;
+			sourceTree = "<group>";
+		};
+		8BE1C7E829923C68001F3688 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 		9321ACFC329F4C833113C24E /* Frameworks */ = {
@@ -297,6 +308,7 @@
 				8B5C45642988F0F800F213EA /* SceneDelegate.swift in Sources */,
 				8B88256929890529007AA204 /* LoginViewController.swift in Sources */,
 				8B5C45852988F9A300F213EA /* PhotoViewerViewController.swift in Sources */,
+				8BE1C7E729923A22001F3688 /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
