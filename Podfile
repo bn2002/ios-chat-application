@@ -11,4 +11,8 @@ target 'Chat App' do
 	pod 'JGProgressHUD'
 	pod 'FirebaseDatabase'
 	pod 'IQKeyboardManagerSwift'
+  pod 'MessageKit'
+  pod 'RealmSwift'
+  pod 'FirebaseStorage'
+  pod 'SDWebImage'
 end

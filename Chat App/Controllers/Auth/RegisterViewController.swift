@@ -135,7 +135,7 @@ extension RegisterViewController {
             UserDefaults.standard.set(email, forKey: "email")
             UserDefaults.standard.set("\(firstname) \(lastname)", forKey: "name")
             let user = User(firstname: firstname, lastname: lastname, email: email, photoUrl: "")
-            DatabaseManager.shared.insertUser(with: user) { isSuccess in
+            DatabaseManager.shared.insertUser(with: user) { (isSuccess, documentID) in
                 if(!isSuccess) {
                     self.registerAlertError(message: "Có lỗi trong quá trình đăng ký")
                     return
@@ -151,6 +151,7 @@ extension RegisterViewController {
                             switch result {
                             case .success(let downloadUrl):
                                 UserDefaults.standard.set(downloadUrl, forKey: "profile_picture_url")
+                                DatabaseManager.shared.setPhotoUser(with: documentID, photoURL: downloadUrl)
                                 print(downloadUrl)
                                 break
                             case .failure(let error):

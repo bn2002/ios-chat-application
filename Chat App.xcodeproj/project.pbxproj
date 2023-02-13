@@ -23,8 +23,14 @@
 		8B7878C6298913AE003B43FB /* RegisterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B7878C5298913AD003B43FB /* RegisterViewController.xib */; };
 		8B7878C829891881003B43FB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8B7878C729891881003B43FB /* GoogleService-Info.plist */; };
 		8B88256929890529007AA204 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B88256729890529007AA204 /* LoginViewController.swift */; };
+		8BA1B9FD299A159400A8B3B9 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1B9FC299A159400A8B3B9 /* ChatViewController.swift */; };
+		8BA1B9FF299A15D300A8B3B9 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA1B9FE299A15D200A8B3B9 /* StorageManager.swift */; };
+		8BB28B76299A20AA008FACE8 /* SearchUserTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BB28B75299A20AA008FACE8 /* SearchUserTableViewCell.xib */; };
 		8BE1C7E22990E55A001F3688 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE1C7E12990E55A001F3688 /* DatabaseManager.swift */; };
 		8BE1C7E729923A22001F3688 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE1C7E629923A22001F3688 /* User.swift */; };
+		8BF2F625299A1DE40086B6F3 /* SearchUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF2F624299A1DE40086B6F3 /* SearchUserViewController.swift */; };
+		8BF2F627299A1E190086B6F3 /* SearchUserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BF2F626299A1E190086B6F3 /* SearchUserViewController.xib */; };
+		8BF2F62B299A207C0086B6F3 /* SearchUserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF2F629299A207C0086B6F3 /* SearchUserTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,8 +53,14 @@
 		8B7878C5298913AD003B43FB /* RegisterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RegisterViewController.xib; sourceTree = "<group>"; };
 		8B7878C729891881003B43FB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8B88256729890529007AA204 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		8BA1B9FC299A159400A8B3B9 /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
+		8BA1B9FE299A15D200A8B3B9 /* StorageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
+		8BB28B75299A20AA008FACE8 /* SearchUserTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchUserTableViewCell.xib; sourceTree = "<group>"; };
 		8BE1C7E12990E55A001F3688 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 		8BE1C7E629923A22001F3688 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		8BF2F624299A1DE40086B6F3 /* SearchUserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchUserViewController.swift; sourceTree = "<group>"; };
+		8BF2F626299A1E190086B6F3 /* SearchUserViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchUserViewController.xib; sourceTree = "<group>"; };
+		8BF2F629299A207C0086B6F3 /* SearchUserTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchUserTableViewCell.swift; sourceTree = "<group>"; };
 		9FBB1BE1A3282944DA0E9CBA /* Pods-Chat App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chat App.release.xcconfig"; path = "Target Support Files/Pods-Chat App/Pods-Chat App.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -117,6 +129,8 @@
 		8B5C45762988F13300F213EA /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				8BB28B75299A20AA008FACE8 /* SearchUserTableViewCell.xib */,
+				8BF2F626299A1E190086B6F3 /* SearchUserViewController.xib */,
 				8B7878C5298913AD003B43FB /* RegisterViewController.xib */,
 				8B2F95852989055800AA2272 /* LoginViewController.xib */,
 				8B5C457F2988F8A600F213EA /* Storyboards */,
@@ -127,12 +141,14 @@
 		8B5C45772988F13A00F213EA /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				8BF2F628299A204D0086B6F3 /* SearchUser */,
 				8B5C45792988F6E000F213EA /* Auth */,
 				8B5C45652988F0F800F213EA /* ConversationsViewController.swift */,
 				8B5C45842988F9A300F213EA /* PhotoViewerViewController.swift */,
 				8B5C45862988F9B800F213EA /* VideoPlayerViewController.swift */,
 				8B5C45882988FA0700F213EA /* NewConversationViewController.swift */,
 				8B5C458A2988FA3300F213EA /* ProfileViewController.swift */,
+				8BA1B9FC299A159400A8B3B9 /* ChatViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -140,6 +156,7 @@
 		8B5C45782988F20900F213EA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				8BA1B9FE299A15D200A8B3B9 /* StorageManager.swift */,
 				8B5C45612988F0F800F213EA /* AppDelegate.swift */,
 				8B5C45632988F0F800F213EA /* SceneDelegate.swift */,
 				8BE1C7E12990E55A001F3688 /* DatabaseManager.swift */,
@@ -170,6 +187,15 @@
 			children = (
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		8BF2F628299A204D0086B6F3 /* SearchUser */ = {
+			isa = PBXGroup;
+			children = (
+				8BF2F624299A1DE40086B6F3 /* SearchUserViewController.swift */,
+				8BF2F629299A207C0086B6F3 /* SearchUserTableViewCell.swift */,
+			);
+			path = SearchUser;
 			sourceTree = "<group>";
 		};
 		9321ACFC329F4C833113C24E /* Frameworks */ = {
@@ -241,9 +267,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				8B2F95862989055800AA2272 /* LoginViewController.xib in Resources */,
+				8BB28B76299A20AA008FACE8 /* SearchUserTableViewCell.xib in Resources */,
 				8B7878C6298913AE003B43FB /* RegisterViewController.xib in Resources */,
 				8B5C456E2988F0F800F213EA /* LaunchScreen.storyboard in Resources */,
 				8B5C456B2988F0F800F213EA /* Assets.xcassets in Resources */,
+				8BF2F627299A1E190086B6F3 /* SearchUserViewController.xib in Resources */,
 				8B5C45692988F0F800F213EA /* Main.storyboard in Resources */,
 				8B7878C829891881003B43FB /* GoogleService-Info.plist in Resources */,
 			);
@@ -304,11 +332,15 @@
 				8B5C45662988F0F800F213EA /* ConversationsViewController.swift in Sources */,
 				8B5C45872988F9B800F213EA /* VideoPlayerViewController.swift in Sources */,
 				8B5C45622988F0F800F213EA /* AppDelegate.swift in Sources */,
+				8BF2F625299A1DE40086B6F3 /* SearchUserViewController.swift in Sources */,
 				8B5C458B2988FA3300F213EA /* ProfileViewController.swift in Sources */,
 				8B5C45642988F0F800F213EA /* SceneDelegate.swift in Sources */,
+				8BF2F62B299A207C0086B6F3 /* SearchUserTableViewCell.swift in Sources */,
 				8B88256929890529007AA204 /* LoginViewController.swift in Sources */,
 				8B5C45852988F9A300F213EA /* PhotoViewerViewController.swift in Sources */,
+				8BA1B9FD299A159400A8B3B9 /* ChatViewController.swift in Sources */,
 				8BE1C7E729923A22001F3688 /* User.swift in Sources */,
+				8BA1B9FF299A15D300A8B3B9 /* StorageManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -462,6 +494,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -489,6 +522,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

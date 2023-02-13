@@ -62,19 +62,54 @@ extension DatabaseManager {
         }
     }
     
-    public func insertUser(with user: User, completion: @escaping (Bool) -> Void) {
-        db.collection("users").addDocument(data: [
+    public func insertUser(with user: User, completion: @escaping (Bool, String) -> Void) {
+        var ref: DocumentReference? = nil
+        ref = db.collection("users").addDocument(data: [
             "firstname": user.firstname,
             "lastname": user.lastname,
             "email": user.email,
             "photoUrl": "",
         ]) { error in
             if let _ = error {
-                completion(false)
+                completion(false, "")
+                return
+            }
+            print(ref!.documentID)
+            completion(true, ref!.documentID)
+        }
+    }
+    
+    public func setPhotoUser(with documentID: String, photoURL: String) {
+        var ref: DocumentReference? = nil
+        ref = db.collection("users").document(documentID)
+        ref?.updateData(["photoUrl": photoURL])
+    }
+    
+    public func searchUser(with user: String, completion: @escaping ([User]) -> Void) {
+        db.collection("users")
+            .whereField("email", isGreaterThanOrEqualTo: user.lowercased())
+                .limit(to: 5)
+        .getDocuments { querySnapshot, error in
+            guard let querySnapshot = querySnapshot  else {
+                print("Khong ton tai")
                 return
             }
             
-            completion(true)
+            var result = [User]()
+            let decoder = JSONDecoder()
+            for document in querySnapshot.documents {
+                let data = document.data()
+                let firstname = data["firstname"] as? String ?? ""
+                let lastname = data["lastname"] as? String ?? ""
+                let email = data["email"] as? String ?? ""
+                let photoURL = data["photoUrl"] as? String ?? ""
+                
+                let user = User(firstname: firstname, lastname: lastname, email: email, photoUrl: photoURL)
+                
+                result.append(user)
+            }
+            
+            completion(result)
         }
     }
 }

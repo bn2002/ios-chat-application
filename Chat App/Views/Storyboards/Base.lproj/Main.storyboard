@@ -46,7 +46,7 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <navigationItem key="navigationItem" id="A1Y-Vp-Env"/>
+                    <navigationItem key="navigationItem" id="W0W-lB-PHF"/>
                     <connections>
                         <outlet property="tableView" destination="SCF-ga-xBd" id="r9w-u1-K0X"/>
                     </connections>

@@ -11,11 +11,19 @@ import FirebaseAuth
 class ConversationsViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
+    private var searchBar: UISearchBar {
+        let searchBar = UISearchBar()
+        searchBar.placeholder = "Nhập tên hoặc địa chỉ email cần tìm"
+        return searchBar
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpTableView()
+        initNavigationItem()
+        DatabaseManager.shared.setPhotoUser(with: "Cdbqtn8q2aK8j6TkdoG3", photoURL: "http://localhost")
     }
+    
     
     @IBAction func didLogoutPressed(_ sender: Any) {
         do {
@@ -47,7 +55,26 @@ class ConversationsViewController: UIViewController {
         validateIsLogin()
         
     }
+    
+}
 
+extension ConversationsViewController {
+    
+    func initNavigationItem() {
+        let newConversationIcon = UIImage(systemName: "plus.message")
+        navigationItem.rightBarButtonItem =
+            UIBarButtonItem(
+                image: newConversationIcon,
+                style: .plain,
+                target: self,
+                action: #selector(didNewConversationPressed)
+            )
+        
+    }
+    @objc func didNewConversationPressed() {
+        let vc = SearchUserViewController()
+        present(vc, animated: true)
+    }
 }
 
 extension ConversationsViewController: UITableViewDelegate, UITableViewDataSource {
