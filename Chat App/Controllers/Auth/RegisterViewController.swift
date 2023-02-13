@@ -140,14 +140,33 @@ extension RegisterViewController {
                     self.registerAlertError(message: "Có lỗi trong quá trình đăng ký")
                     return
                 } else {
-                    self.registerAlertError(message: "Đăng ký thành công, vui lòng đăng nhập")
                     self.passwordTextField.text = ""
                     self.emailTextField.text = ""
                     self.firstnameTextField.text = ""
                     self.lastnameTextField.text = ""
+                    
+                    if let image = self.userAvatar.image, let data = image.pngData() {
+                        let fileName = DatabaseManager.safeEmail(emailAddress: email)
+                        StorageManager.shared.uploadImage(with: data, fileName: fileName) { result in
+                            switch result {
+                            case .success(let downloadUrl):
+                                UserDefaults.standard.set(downloadUrl, forKey: "profile_picture_url")
+                                print(downloadUrl)
+                                break
+                            case .failure(let error):
+                                print(error.localizedDescription)
+                                break
+                            }
+                        }
+                    }
+                    //self.registerAlertError(message: "Đăng ký thành công, vui lòng đăng nhập")
+                    self.navigationController?.dismiss(animated: true)
+                    
+
                 }
                 
             }
+            
         }
         
         spinner.dismiss(animated: true)
@@ -181,6 +200,24 @@ extension RegisterViewController: UIImagePickerControllerDelegate, UINavigationC
     }
     
     func presentPhotoPicker() {
+        let vc = UIImagePickerController()
+        vc.sourceType = .photoLibrary
+        vc.delegate = self
+        vc.allowsEditing = true
         
+        present(vc, animated: true)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        picker.dismiss(animated: true)
+        guard let selectedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage else {
+            return
+        }
+        
+        self.userAvatar.image = selectedImage
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true)
     }
 }

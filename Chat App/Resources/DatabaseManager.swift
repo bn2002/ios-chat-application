@@ -25,7 +25,7 @@ final class DatabaseManager {
 
 extension DatabaseManager {
     public func getDataFor(path: String, completion: @escaping (Result<Any, Error>) -> Void) {
-        db.collection("users").whereField("username", isEqualTo: path).limit(to: 1).getDocuments { querySnapshot, error in
+        db.collection("users").whereField("email", isEqualTo: path).limit(to: 1).getDocuments { querySnapshot, error in
             
             if let error = error {
                 completion(.failure(error))
@@ -33,7 +33,6 @@ extension DatabaseManager {
             }
             
             guard let querySnapshot = querySnapshot else {
-                
                 return
             }
             

@@ -56,13 +56,14 @@ class LoginViewController: UIViewController {
                 strongSelf.spinner.dismiss(animated: true)
             }
             
-            DatabaseManager.shared.getDataFor(path: "doanhcms@gmail.com") { result in
+            DatabaseManager.shared.getDataFor(path: email) { result in
                 switch result {
                 case .success(let data):
                     guard
                         let userData = data as? [String: Any],
-                        let firstName = userData["first_name"] as? String,
-                        let lastName = userData["last_name"] as? String
+                        let firstName = userData["firstname"] as? String,
+                        let lastName = userData["lastname"] as? String,
+                        let photoUrl = userData["photoUrl"] as? String
                     else {
                         print("Decode error")
                         return
@@ -79,6 +80,9 @@ class LoginViewController: UIViewController {
                 print("Fail to login to user: \(email)")
                 return
             }
+            
+            UserDefaults.standard.set(email, forKey: "email")
+            strongSelf.navigationController?.dismiss(animated: true)
             
             
 
