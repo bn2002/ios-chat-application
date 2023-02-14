@@ -37,11 +37,16 @@ extension SearchUserViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard
-            let cell = tableView.dequeueReusableCell(withIdentifier: "search_user_cell", for: indexPath) as? SearchUserTableViewCell else { return UITableViewCell() }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "search_user_cell", for: indexPath) as? SearchUserTableViewCell
+        else {
+            return UITableViewCell()
+            
+        }
+        
         if let row = self.filterList {
             let user = row[indexPath.row]
             cell.usernameLabel.text = user.firstname + " " + user.lastname
+            
             if let photoUrl = user.photoUrl, user.photoUrl?.isEmpty == false {
                 cell.userAvatar.sd_setImage(with: URL(string: photoUrl), placeholderImage: UIImage(named: user.email))
             }
@@ -51,11 +56,29 @@ extension SearchUserViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // Nếu hai người chưa từng nói chuyện thì tiến hành tạo cuộc trò chuyện
+        guard let userData = filterList?[indexPath.row] else {
+            print("didSelectRowAt Khong lay duoc thong tin user")
+            return
+        }
         
-        // Nếu hai người đã từng nói chuyện với nhau thì load lại tin nhắn cũ
-        dismiss(animated: true) {
-            self.parentSelf?.navigationController?.pushViewController(ChatViewController(), animated: true)
+        DatabaseManager.shared.checkContactsExist(with: userData.email) {[weak self] result in
+            guard let `self` = self else {
+                return
+            }
+            switch result {
+            case .success(let value):
+                let vc = ChatViewController()
+                vc.isContactExist = value
+                vc.receiveEmail = userData.email
+                vc.title = userData.firstname + " " + userData.lastname
+                self.dismiss(animated: true) {
+                    self.parentSelf?.navigationController?.pushViewController(vc, animated: true)
+                }
+                break
+            case .failure(let error):
+                error.localizedDescription
+                break
+            }
         }
         
     }

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell userInteractionEnabled="NO" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" rowHeight="78" id="KGk-i7-Jjw" customClass="MessageTableViewCell" customModule="Chat_App" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="326" height="78"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="326" height="78"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="NW2-y4-vws">
+                        <rect key="frame" x="0.0" y="0.0" width="326" height="30"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="aGZ-my-yIb">
+                                <rect key="frame" x="0.0" y="1.6666666666666661" width="30" height="27.333333333333336"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="eLC-aG-xyz"/>
+                                    <constraint firstAttribute="width" constant="30" id="qua-8T-Q0T"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label. dsfjdklsfjklsdjfkdsfjlskfjdklsf sdfdsfdsfsfds" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h7C-hh-3BM">
+                                <rect key="frame" x="30" y="0.0" width="266" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="Ho5-Cd-rTv"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Ffy-ix-Iwp">
+                                <rect key="frame" x="296" y="1.6666666666666661" width="30" height="27.333333333333336"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="30" id="Euo-BR-p7N"/>
+                                    <constraint firstAttribute="height" constant="30" id="r5e-cs-UEz"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="aGZ-my-yIb" firstAttribute="leading" secondItem="NW2-y4-vws" secondAttribute="leading" id="PQO-FU-8Qb"/>
+                        </constraints>
+                    </stackView>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="NW2-y4-vws" secondAttribute="trailing" id="LOR-bq-tH7"/>
+                    <constraint firstItem="NW2-y4-vws" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="Pun-gY-LUm"/>
+                    <constraint firstItem="NW2-y4-vws" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="fKI-wd-V8d"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="ivLeftAvatar" destination="aGZ-my-yIb" id="iVS-GM-2cg"/>
+                <outlet property="ivRightAvatar" destination="Ffy-ix-Iwp" id="pjY-Z6-Etr"/>
+                <outlet property="messageContent" destination="h7C-hh-3BM" id="Ke5-Uh-cQY"/>
+            </connections>
+            <point key="canvasLocation" x="15.267175572519083" y="26.760563380281692"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="person" catalog="system" width="128" height="121"/>
+    </resources>
+</document>

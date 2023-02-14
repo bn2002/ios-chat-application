@@ -115,8 +115,51 @@ extension DatabaseManager {
         }
     }
     
-    public func checkConversationExist() -> Bool {
+    public func checkContactsExist(with receiveEmail: String, completion: @escaping (Result<Bool, Error>) -> Void ) -> Void {
+        guard let currentEmail = Auth.auth().currentUser?.email else {
+            completion(.failure(MyError.getCurrentEmailError))
+            return
+        }
+        let safeEmail = DatabaseManager.safeEmail(emailAddress: currentEmail)
+        db.collection("contacts")
+        .whereField("user_email", isEqualTo: currentEmail)
+        .whereField("contact_email", isEqualTo: receiveEmail)
+        .getDocuments { querySnapshot, error in
+            guard let querySnapshot = querySnapshot else {
+                completion(.failure(MyError.querySnapshotError))
+                return
+            }
+            
+            if(querySnapshot.isEmpty) {
+                completion(.success(false))
+                return
+            }
+            
+            completion(.success(true))
+        }
         
-        return true
+    }
+    
+    public func createConversattion(conversation: Conversation, completion: @escaping (Result<String, Error>) -> Void)
+    {
+        var ref: DocumentReference? = nil
+        ref = db.collection("conversations").addDocument(data: [
+            "userOne": conversation.userOne,
+            "userTwo": conversation.userTwo,
+            "createdAt": Date()
+        ]){ error in
+                if let error = error {
+                    completion(.failure(error))
+                    return
+                }
+            completion(.success(ref!.documentID))
+        }
+    }
+    
+    public func createContact(data contact: Contact) {
+        db.collection("contacts").addDocument(data: [
+            "email": contact.email,
+            "contactEmail": contact.contactEmail
+        ])
     }
 }
