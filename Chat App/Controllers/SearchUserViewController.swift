@@ -15,6 +15,7 @@ class SearchUserViewController: UIViewController {
     
     var searchDelayTimer: Timer?
     var filterList: [User]?
+    weak var parentSelf: UIViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,7 +42,7 @@ extension SearchUserViewController: UITableViewDelegate, UITableViewDataSource {
         if let row = self.filterList {
             let user = row[indexPath.row]
             cell.usernameLabel.text = user.firstname + " " + user.lastname
-            if let photoUrl = user.photoUrl {
+            if let photoUrl = user.photoUrl, user.photoUrl?.isEmpty == false {
                 cell.userAvatar.sd_setImage(with: URL(string: photoUrl), placeholderImage: UIImage(named: user.email))
             }
             
@@ -50,9 +51,19 @@ extension SearchUserViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //dismiss(animated: true)
-        self.navigationController?.pushViewController(ChatViewController(), animated: true)
+        // Nếu hai người chưa từng nói chuyện thì tiến hành tạo cuộc trò chuyện
+        
+        // Nếu hai người đã từng nói chuyện với nhau thì load lại tin nhắn cũ
+        dismiss(animated: true) {
+            self.parentSelf?.navigationController?.pushViewController(ChatViewController(), animated: true)
+        }
+        
     }
+    
+    func createNewConversation() {
+        
+    }
+    
 }
 
 extension SearchUserViewController: UISearchBarDelegate {

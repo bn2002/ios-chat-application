@@ -22,7 +22,7 @@ final class StorageManager {
         
         let uploadTask = userRef.putData(data, metadata: nil) { (metadata, error) in
           guard let metadata = metadata else {
-            // Uh-oh, an error occurred!
+              completion(.failure(StorageError.internalError("Không thể upload ảnh")))
             return
           }
           // Metadata contains file metadata such as size, content-type.
@@ -30,11 +30,12 @@ final class StorageManager {
           // You can also access to download URL after upload.
             userRef.downloadURL { (url, error) in
             guard let downloadURL = url else {
-
+                completion(.failure(StorageError.objectNotFound("Không thể tải ảnh")))
               return
             }
                 
-                print(downloadURL)
+                completion(.success(downloadURL.absoluteString))
+                
           }
         }
     }

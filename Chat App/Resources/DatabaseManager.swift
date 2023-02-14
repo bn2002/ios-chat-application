@@ -8,6 +8,7 @@
 import Foundation
 import FirebaseFirestore
 import FirebaseCore
+import FirebaseAuth
 
 final class DatabaseManager {
     
@@ -74,7 +75,6 @@ extension DatabaseManager {
                 completion(false, "")
                 return
             }
-            print(ref!.documentID)
             completion(true, ref!.documentID)
         }
     }
@@ -86,8 +86,10 @@ extension DatabaseManager {
     }
     
     public func searchUser(with user: String, completion: @escaping ([User]) -> Void) {
+        let currentEmail = Auth.auth().currentUser?.email
         db.collection("users")
             .whereField("email", isGreaterThanOrEqualTo: user.lowercased())
+            .whereField("email", isNotEqualTo: currentEmail)
                 .limit(to: 5)
         .getDocuments { querySnapshot, error in
             guard let querySnapshot = querySnapshot  else {
@@ -111,5 +113,10 @@ extension DatabaseManager {
             
             completion(result)
         }
+    }
+    
+    public func checkConversationExist() -> Bool {
+        
+        return true
     }
 }

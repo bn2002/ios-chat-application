@@ -21,7 +21,6 @@ class ConversationsViewController: UIViewController {
         super.viewDidLoad()
         setUpTableView()
         initNavigationItem()
-        DatabaseManager.shared.setPhotoUser(with: "Cdbqtn8q2aK8j6TkdoG3", photoURL: "http://localhost")
     }
     
     
@@ -73,6 +72,7 @@ extension ConversationsViewController {
     }
     @objc func didNewConversationPressed() {
         let vc = SearchUserViewController()
+        vc.parentSelf = self
         present(vc, animated: true)
     }
 }

@@ -24,7 +24,7 @@ class SearchUserTableViewCell: UITableViewCell {
     }
     
     override func prepareForReuse() {
-        userAvatar.image = nil
+        userAvatar.image = UIImage(systemName: Constant.DEFAULT_AVATAR)
         usernameLabel.text = ""
     }
     
