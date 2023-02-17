@@ -7,6 +7,7 @@
 
 import UIKit
 import FirebaseAuth
+import SDWebImage
 class ChatViewController: UIViewController {
 
     @IBOutlet weak var tbvMessages: UITableView!
@@ -17,6 +18,8 @@ class ChatViewController: UIViewController {
     var conversationID: String?
     
     var messages = [Message]()
+    var contactAvatar: String?
+    var myAvatar: String?
     override func viewDidLoad() {
         super.viewDidLoad()
         tbvMessages.delegate = self
@@ -64,7 +67,6 @@ class ChatViewController: UIViewController {
                     //let createdAt = data["createdAt"] as? Date
                 {
                     self.messages.append(Message(conversationID: conversationID, fromUser: fromUser, type: "", content: content, isSeen: isSeen, createdAt: Date()))
-                    print(self.messages.count)
                     DispatchQueue.main.async {
                         self.tbvMessages.reloadData()
                         let indexPath = IndexPath(row: self.messages.count - 1, section: 0)
@@ -113,7 +115,7 @@ extension ChatViewController:UITextFieldDelegate {
             DatabaseManager.shared.createContact(contact: newContact)
             // Tạo message
             self.isContactExist = true
-            //loadMessages()
+            loadMessages()
         }
         
         Task {
@@ -149,6 +151,23 @@ extension ChatViewController:UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let vc = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! MessageTableViewCell
         let message = self.messages[indexPath.row]
+        let currentUser = Auth.auth().currentUser?.email
+        // Nếu là tin nhắn của mình
+        if(currentUser == message.fromUser) {
+            vc.ivLeftAvatar.isHidden = true
+            vc.ivRightAvatar.isHidden = false
+            if let myAvatar = self.myAvatar, myAvatar.isEmpty == false {
+                vc.ivRightAvatar.sd_setImage(with: URL(string: myAvatar), placeholderImage: UIImage(named: "user_avatar.png"))
+            }
+           
+        } else {
+            vc.ivLeftAvatar.isHidden = false
+            vc.ivRightAvatar.isHidden = true
+            if let contactAvatar = self.contactAvatar, contactAvatar.isEmpty == false {
+                vc.ivLeftAvatar.sd_setImage(with: URL(string: contactAvatar), placeholderImage: UIImage(named: "user_avatar.png"))
+            }
+        }
+        
         vc.messageContent.text = message.content
         
         return vc

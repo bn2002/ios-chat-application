@@ -50,6 +50,35 @@ extension DatabaseManager {
         }
     }
     
+    public func getUser(email: String) async -> User? {
+        do {
+            let querySnapshot = try await db.collection("users")
+                            .whereField("email", isEqualTo: email)
+                            .limit(to: 1)
+                            .getDocuments()
+            let documents = querySnapshot.documents
+            if(documents.count < 1) {
+                return nil
+            }
+            
+            let data = documents.first?.data()
+            guard let data = data else {
+                return nil
+            }
+            
+            let firstname = data["firstname"] as? String ?? ""
+            let lastname = data["lastname"] as? String ?? ""
+            let photoURL = data["photoUrl"] as? String ?? ""
+            return User(firstname: firstname, lastname: lastname, email: email, photoUrl: photoURL)
+        } catch {
+            print(error.localizedDescription)
+            
+        }
+        
+        return nil
+        
+    }
+    
     public func isUserExist(email: String, completion: @escaping (Bool) -> Void ) {
         db.collection("users").whereField("email", isEqualTo: email).limit(to: 1).getDocuments { querySnapshot, error in
             
@@ -85,6 +114,25 @@ extension DatabaseManager {
         ref?.updateData(["photoUrl": photoURL])
     }
     
+    public func getPhotoUser(userEmail: String) async -> String{
+        var photoURL: String = ""
+        do {
+            let querySnapshot = try await db.collection("users")
+                .whereField("email", isEqualTo: userEmail)
+                .getDocuments()
+            guard let document = querySnapshot.documents.first else {
+                return ""
+            }
+            
+            let userData = document.data()
+            photoURL = userData["photoUrl"] as? String ?? ""
+        } catch {
+            print("Lấy avatar user thất bại")
+        }
+        
+        return photoURL
+    }
+    
     public func searchUser(with user: String, completion: @escaping ([User]) -> Void) {
         let currentEmail = Auth.auth().currentUser?.email
         db.collection("users")
@@ -113,6 +161,43 @@ extension DatabaseManager {
             
             completion(result)
         }
+    }
+    
+    public func fetchContact(email: String) async -> [[String: Any]] {
+        var result = [[String: Any]]()
+        do {
+            let querySnapshot = try await db.collection("contacts").whereField("email", isEqualTo: email).getDocuments()
+            let documents = querySnapshot.documents
+            for document in documents {
+                let data = document.data()
+                let contactEmail = data["contactEmail"] as? String ?? ""
+                let conversationID = data["conversationID"] as? String ?? ""
+                if conversationID.isEmpty {
+                    continue
+                }
+                
+                let user = await self.getUser(email: contactEmail)
+                guard let user = user else {
+                    print("Khong lay duoc user")
+                    continue
+                }
+                let lastMessage = await self.getLasestMessage(conversationID: conversationID)
+
+                let contact: [String : Any] = [
+                    "conversationID": conversationID,
+                    "contactAvatar": user.photoUrl!,
+                    "email": contactEmail,
+                    "fullname": user.firstname + " " + user.lastname,
+                    "lastMessage": lastMessage
+                ]
+                print(contact)
+                result.append(contact)
+            }
+        } catch {
+            print(error.localizedDescription)
+        }
+        
+        return result
     }
     
     public func checkContactsExist(with receiveEmail: String, completion: @escaping (Result<Bool, Error>) -> Void ) -> Void {
@@ -194,5 +279,34 @@ extension DatabaseManager {
             .whereField("conversationID", isEqualTo: conversationID)
             .order(by: "createdAt")
             .addSnapshotListener(completion)
+    }
+    
+    public func getLasestMessage(conversationID: String) async -> Message? {
+        do {
+            let querySnapshot = try await db.collection("messages")
+                    .whereField("conversationID", isEqualTo: conversationID)
+                    .order(by: "createdAt", descending: true).limit(to: 1)
+                    .getDocuments()
+            if(querySnapshot.documents.count > 0) {
+                let data = querySnapshot.documents.first?.data()
+                guard let data = data else {
+                    return nil
+                }
+                let fromUser = data["fromUser"] as? String ?? ""
+                let type = data["type"] as? String ?? ""
+                let content = data["content"] as? String ?? ""
+                let isSeen = data["isSeen"] as? Bool ?? false
+                let date = Date()
+                
+                return Message(conversationID: conversationID, fromUser: fromUser, type: type, content: content, isSeen: isSeen, createdAt: date)
+            }
+            
+            
+        } catch{
+            print(error.localizedDescription)
+        }
+        
+        return nil
+        
     }
 }

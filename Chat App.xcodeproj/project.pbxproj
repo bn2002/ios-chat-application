@@ -24,6 +24,8 @@
 		8B5C45852988F9A300F213EA /* PhotoViewerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5C45842988F9A300F213EA /* PhotoViewerViewController.swift */; };
 		8B5C45872988F9B800F213EA /* VideoPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5C45862988F9B800F213EA /* VideoPlayerViewController.swift */; };
 		8B5C458B2988FA3300F213EA /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5C458A2988FA3300F213EA /* ProfileViewController.swift */; };
+		8B66C667299F6B1600D1CEFE /* ConversationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B66C665299F6B1600D1CEFE /* ConversationTableViewCell.swift */; };
+		8B66C668299F6B1600D1CEFE /* ConversationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B66C666299F6B1600D1CEFE /* ConversationTableViewCell.xib */; };
 		8B7878C6298913AE003B43FB /* RegisterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B7878C5298913AD003B43FB /* RegisterViewController.xib */; };
 		8B7878C829891881003B43FB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8B7878C729891881003B43FB /* GoogleService-Info.plist */; };
 		8B88256929890529007AA204 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B88256729890529007AA204 /* LoginViewController.swift */; };
@@ -61,6 +63,8 @@
 		8B5C45842988F9A300F213EA /* PhotoViewerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoViewerViewController.swift; sourceTree = "<group>"; };
 		8B5C45862988F9B800F213EA /* VideoPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerViewController.swift; sourceTree = "<group>"; };
 		8B5C458A2988FA3300F213EA /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		8B66C665299F6B1600D1CEFE /* ConversationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationTableViewCell.swift; sourceTree = "<group>"; };
+		8B66C666299F6B1600D1CEFE /* ConversationTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConversationTableViewCell.xib; sourceTree = "<group>"; };
 		8B7878C5298913AD003B43FB /* RegisterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RegisterViewController.xib; sourceTree = "<group>"; };
 		8B7878C729891881003B43FB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8B88256729890529007AA204 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -159,6 +163,7 @@
 		8B5C45772988F13A00F213EA /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				8B66C664299F6AEA00D1CEFE /* HomeScreen */,
 				8BB28B77299B667B008FACE8 /* ChatScreen */,
 				8B5C45792988F6E000F213EA /* Auth */,
 				8B5C45652988F0F800F213EA /* ConversationsViewController.swift */,
@@ -198,6 +203,15 @@
 				8B5C456C2988F0F800F213EA /* LaunchScreen.storyboard */,
 			);
 			path = Storyboards;
+			sourceTree = "<group>";
+		};
+		8B66C664299F6AEA00D1CEFE /* HomeScreen */ = {
+			isa = PBXGroup;
+			children = (
+				8B66C665299F6B1600D1CEFE /* ConversationTableViewCell.swift */,
+				8B66C666299F6B1600D1CEFE /* ConversationTableViewCell.xib */,
+			);
+			path = HomeScreen;
 			sourceTree = "<group>";
 		};
 		8BB28B77299B667B008FACE8 /* ChatScreen */ = {
@@ -283,6 +297,7 @@
 				8BB28B76299A20AA008FACE8 /* SearchUserTableViewCell.xib in Resources */,
 				8BB28B7B299B669F008FACE8 /* ChatViewController.xib in Resources */,
 				8B7878C6298913AE003B43FB /* RegisterViewController.xib in Resources */,
+				8B66C668299F6B1600D1CEFE /* ConversationTableViewCell.xib in Resources */,
 				8B5C456E2988F0F800F213EA /* LaunchScreen.storyboard in Resources */,
 				8B5C456B2988F0F800F213EA /* Assets.xcassets in Resources */,
 				8BF2F627299A1E190086B6F3 /* SearchUserViewController.xib in Resources */,
@@ -358,6 +373,7 @@
 				8B27407C299B7ABD002525B7 /* MyError.swift in Sources */,
 				8B88256929890529007AA204 /* LoginViewController.swift in Sources */,
 				8B5C45852988F9A300F213EA /* PhotoViewerViewController.swift in Sources */,
+				8B66C667299F6B1600D1CEFE /* ConversationTableViewCell.swift in Sources */,
 				8BB28B7E299B6DCF008FACE8 /* MessageTableViewCell.swift in Sources */,
 				8BE1C7E729923A22001F3688 /* User.swift in Sources */,
 				8BA1B9FF299A15D300A8B3B9 /* StorageManager.swift in Sources */,

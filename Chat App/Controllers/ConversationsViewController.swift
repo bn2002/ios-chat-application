@@ -7,10 +7,11 @@
 
 import UIKit
 import FirebaseAuth
-
+import SDWebImage
 class ConversationsViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
+    var contacts = [[String:Any]]()
     private var searchBar: UISearchBar {
         let searchBar = UISearchBar()
         searchBar.placeholder = "Nhập tên hoặc địa chỉ email cần tìm"
@@ -19,8 +20,11 @@ class ConversationsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setUpTableView()
+        validateIsLogin()
         initNavigationItem()
+        setUpTableView()
+        
+
     }
     
     
@@ -46,13 +50,26 @@ class ConversationsViewController: UIViewController {
     private func setUpTableView() {
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        let nib = UINib(nibName: "ConversationTableViewCell", bundle: .main)
+        tableView.register(nib, forCellReuseIdentifier: "cell")
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        loadContacts()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        validateIsLogin()
+
         
+    }
+    
+    func loadContacts() {
+        Task {
+            let userEmail = Auth.auth().currentUser?.email
+            self.contacts = await DatabaseManager.shared.fetchContact(email: userEmail!)
+            tableView.reloadData()
+        }
     }
     
 }
@@ -79,23 +96,48 @@ extension ConversationsViewController {
 
 extension ConversationsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return contacts.count
     }
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel?.text = "Hello World"
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! ConversationTableViewCell
+        let contact = contacts[indexPath.row]
+        let photoURL = contact["contactAvatar"] as? String ?? ""
+        cell.ivUserAvatar.sd_setImage(with: URL(string: photoURL))
+        cell.lContactName.text = contact["fullname"] as? String ?? ""
+        let lastMessage = contact["lastMessage"] as? Message
+        if let lastMessage = lastMessage {
+            cell.lContentMessage.text = lastMessage.content
+        }
+        
         cell.accessoryType = .disclosureIndicator
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let vc = ChatViewController()
-        vc.title = "BN2002"
-        vc.navigationItem.largeTitleDisplayMode = .never
-        navigationController?.pushViewController(vc, animated: true)
+        
+        Task {
+            let vc = ChatViewController()
+            let contact = contacts[indexPath.row]
+            vc.title = contact["fullname"] as? String ?? ""
+            vc.contactAvatar = contact["contactAvatar"] as? String ?? ""
+            vc.conversationID = contact["conversationID"] as? String ?? ""
+            var myAvatar = ""
+            let userEmail = Auth.auth().currentUser?.email
+            if( UserDefaults.standard.string(forKey: "profile_picture_url") == nil ) {
+                myAvatar = await DatabaseManager.shared.getPhotoUser(userEmail: userEmail!)
+            } else {
+                myAvatar = UserDefaults.standard.string(forKey: "profile_picture_url") ?? ""
+            }
+            vc.myAvatar = myAvatar
+            vc.isContactExist = true
+            vc.receiveEmail = contact["email"] as? String ?? ""
+            vc.navigationItem.largeTitleDisplayMode = .never
+            navigationController?.pushViewController(vc, animated: true)
+        }
+       
     }
     
     

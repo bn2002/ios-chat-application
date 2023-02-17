@@ -72,12 +72,22 @@ extension SearchUserViewController: UITableViewDelegate, UITableViewDataSource {
                     let vc = ChatViewController()
                     vc.isContactExist = value
                     vc.receiveEmail = userData.email
+                    let userEmail = Auth.auth().currentUser?.email
                     if(value == true) {
-                        let userEmail = Auth.auth().currentUser?.email
                         let conversationID = await DatabaseManager.shared.getConversationID(fromEmail: userEmail!, toEmail: userData.email)
                         vc.conversationID = conversationID
                     }
+                    let contactAvatar = await DatabaseManager.shared.getPhotoUser(userEmail: userData.email)
+                    var myAvatar = ""
+                    if( UserDefaults.standard.string(forKey: "profile_picture_url") == nil ) {
+                        myAvatar = await DatabaseManager.shared.getPhotoUser(userEmail: userEmail!)
+                    } else {
+                        myAvatar = UserDefaults.standard.string(forKey: "profile_picture_url") ?? ""
+                    }
+                    
                     vc.title = userData.firstname + " " + userData.lastname
+                    vc.myAvatar = myAvatar
+                    vc.contactAvatar = contactAvatar
                     self.dismiss(animated: true) {
                         self.parentSelf?.navigationController?.pushViewController(vc, animated: true)
                     }
