@@ -122,8 +122,8 @@ extension DatabaseManager {
         }
         let safeEmail = DatabaseManager.safeEmail(emailAddress: currentEmail)
         db.collection("contacts")
-        .whereField("user_email", isEqualTo: currentEmail)
-        .whereField("contact_email", isEqualTo: receiveEmail)
+        .whereField("email", isEqualTo: currentEmail)
+        .whereField("contactEmail", isEqualTo: receiveEmail)
         .getDocuments { querySnapshot, error in
             guard let querySnapshot = querySnapshot else {
                 completion(.failure(MyError.querySnapshotError))
@@ -140,26 +140,59 @@ extension DatabaseManager {
         
     }
     
-    public func createConversattion(conversation: Conversation, completion: @escaping (Result<String, Error>) -> Void)
-    {
-        var ref: DocumentReference? = nil
-        ref = db.collection("conversations").addDocument(data: [
-            "userOne": conversation.userOne,
-            "userTwo": conversation.userTwo,
+    
+    public func createConversattion(conversation: Conversation) -> String {
+        let ref = db.collection("conversations").addDocument(data: [
             "createdAt": Date()
-        ]){ error in
-                if let error = error {
-                    completion(.failure(error))
-                    return
-                }
-            completion(.success(ref!.documentID))
-        }
+        ])
+        
+        return ref.documentID
     }
     
-    public func createContact(data contact: Contact) {
+    public func getConversationID(fromEmail: String, toEmail: String) async -> String {
+        do {
+            let snapshot = try await db.collection("contacts")
+                .whereField("email", isEqualTo: fromEmail)
+                .whereField("contactEmail", isEqualTo: toEmail)
+                .limit(to: 1)
+                .getDocuments()
+            if(snapshot.documents.count > 0) {
+                for document in snapshot.documents {
+                    let data = document.data()
+                    return data["conversationID"] as? String ?? ""
+                }
+            }
+
+        } catch {
+            print(error.localizedDescription)
+        }
+        
+        return ""
+        
+    }
+    
+    public func createContact(contact: Contact) {
         db.collection("contacts").addDocument(data: [
             "email": contact.email,
+            "conversationID": contact.conversationID,
             "contactEmail": contact.contactEmail
         ])
+    }
+    
+    public func createMessage(message: Message) {
+        db.collection("messages").addDocument(data: [
+            "fromUser": message.fromUser,
+            "conversationID": message.conversationID,
+            "content": message.content,
+            "isSeen": false,
+            "createdAt": message.createdAt
+        ])
+    }
+    
+    public func fetchMessage(conversationID: String, completion: @escaping (QuerySnapshot?, Error?) -> Void) {
+        db.collection("messages")
+            .whereField("conversationID", isEqualTo: conversationID)
+            .order(by: "createdAt")
+            .addSnapshotListener(completion)
     }
 }

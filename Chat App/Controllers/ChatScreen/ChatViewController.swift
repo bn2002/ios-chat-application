@@ -14,7 +14,9 @@ class ChatViewController: UIViewController {
     
     var receiveEmail: String?
     var isContactExist: Bool?
-    let messages = [Message]()
+    var conversationID: String?
+    
+    var messages = [Message]()
     override func viewDidLoad() {
         super.viewDidLoad()
         tbvMessages.delegate = self
@@ -22,11 +24,55 @@ class ChatViewController: UIViewController {
         tfMessageInput.delegate = self
         let nib = UINib(nibName: "MessageTableViewCell", bundle: .main)
         tbvMessages.register(nib, forCellReuseIdentifier: "cell")
-        // Do any additional setup after loading the view.
+        if let conversationID = conversationID {
+            loadMessages()
+        }
     }
     
     @IBAction func sendButtonPressed(_ sender: UIButton) {
+        print("button sent pressed")
         tfMessageInput.endEditing(true)
+    }
+    
+    func loadMessages() {
+        guard let conversationID = self.conversationID else {
+            print("Chưa có conversation nên không thể load messages")
+            return
+        }
+        
+        DatabaseManager.shared.fetchMessage(conversationID: conversationID) {[weak self] querySnapshot, error in
+            guard let `self` = self else {
+                return
+            }
+            if let error = error {
+                print(error.localizedDescription)
+                return
+            }
+            
+            guard let documents = querySnapshot?.documents else {
+                print("Không lấy được documents")
+                return
+            }
+            self.messages = []
+            
+            for document in documents {
+                let data = document.data()
+                if  let fromUser = data["fromUser"] as? String,
+                    //let type = data["type"] as? String,
+                    let content = data["content"] as? String,
+                    let isSeen = data["isSeen"] as? Bool
+                    //let createdAt = data["createdAt"] as? Date
+                {
+                    self.messages.append(Message(conversationID: conversationID, fromUser: fromUser, type: "", content: content, isSeen: isSeen, createdAt: Date()))
+                    print(self.messages.count)
+                    DispatchQueue.main.async {
+                        self.tbvMessages.reloadData()
+                        let indexPath = IndexPath(row: self.messages.count - 1, section: 0)
+                        self.tbvMessages.scrollToRow(at: indexPath, at: .top, animated: false)
+                    }
+                }
+            }
+        }
     }
     
     deinit {
@@ -36,6 +82,7 @@ class ChatViewController: UIViewController {
 
 extension ChatViewController:UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
+        print("textFieldDidEndEditing: Sent messages")
         handleSendMessage(textContent: textField.text!)
     }
     
@@ -49,15 +96,40 @@ extension ChatViewController:UITextFieldDelegate {
             print("Không thể kiểm tra liên hệ đã tồn tại")
             return
         }
-        let conversation = Conversation(userOne: userEmail, userTwo: receiveEmail, createdAt: Date())
-        let message = Message(conversationID: "", fromUser: userEmail, type: "text", content: textContent, isSeen: false, createdAt: Date())
         
+        // Nếu chưa tồn tại tin nhắn giữa 2 người
         if(isContactExist == false) {
-            DatabaseManager.shared.createConversattion(conversation: conversation, completion: { result in
-                let newContact = Contact(email: userEmail, contactEmail: receiveEmail, lastMessage: message)
-                DatabaseManager.shared.createContact(data: newContact)
-            })
+            // Tạo mới đoạn hội thoại
+            let conversation = Conversation(createdAt: Date())
+            self.conversationID = DatabaseManager.shared.createConversattion(conversation: conversation)
+            guard let conversationID = self.conversationID else {
+                print("Tạo cuộc trò chuyện thất bại")
+                return
+            }
+            var newContact = Contact(email: userEmail, conversationID: conversationID, contactEmail: receiveEmail)
+            // Tạo mới liên hệ vào tài khoản của cả 2 người
+            DatabaseManager.shared.createContact(contact: newContact)
+            newContact = Contact(email: receiveEmail, conversationID: conversationID, contactEmail: userEmail)
+            DatabaseManager.shared.createContact(contact: newContact)
+            // Tạo message
+            self.isContactExist = true
+            //loadMessages()
+        }
+        
+        Task {
+            if(self.conversationID == nil) {
+                self.conversationID = await DatabaseManager.shared.getConversationID(fromEmail: userEmail, toEmail: receiveEmail)
+            }
             
+            guard let conversationID = self.conversationID else {
+                print("Lỗi không lấy được conversationID")
+                return
+            }
+            
+            let message = Message(conversationID: conversationID, fromUser: userEmail, type: "text", content: textContent, isSeen: false, createdAt: Date())
+            DatabaseManager.shared.createMessage(message: message)
+            
+            tfMessageInput.text = ""
         }
         
         
@@ -76,7 +148,9 @@ extension ChatViewController:UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let vc = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! MessageTableViewCell
-        vc.messageContent.text = "Noi dung"
+        let message = self.messages[indexPath.row]
+        vc.messageContent.text = message.content
+        
         return vc
     }
     

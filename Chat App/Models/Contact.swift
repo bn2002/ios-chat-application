@@ -8,6 +8,6 @@
 import Foundation
 struct Contact {
     let email:String
+    var conversationID: String?
     let contactEmail: String
-    let lastMessage: Message
 }

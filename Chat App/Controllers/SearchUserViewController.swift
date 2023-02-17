@@ -7,6 +7,7 @@
 
 import UIKit
 import SDWebImage
+import FirebaseAuth
 
 class SearchUserViewController: UIViewController {
  
@@ -67,13 +68,21 @@ extension SearchUserViewController: UITableViewDelegate, UITableViewDataSource {
             }
             switch result {
             case .success(let value):
-                let vc = ChatViewController()
-                vc.isContactExist = value
-                vc.receiveEmail = userData.email
-                vc.title = userData.firstname + " " + userData.lastname
-                self.dismiss(animated: true) {
-                    self.parentSelf?.navigationController?.pushViewController(vc, animated: true)
+                Task {
+                    let vc = ChatViewController()
+                    vc.isContactExist = value
+                    vc.receiveEmail = userData.email
+                    if(value == true) {
+                        let userEmail = Auth.auth().currentUser?.email
+                        let conversationID = await DatabaseManager.shared.getConversationID(fromEmail: userEmail!, toEmail: userData.email)
+                        vc.conversationID = conversationID
+                    }
+                    vc.title = userData.firstname + " " + userData.lastname
+                    self.dismiss(animated: true) {
+                        self.parentSelf?.navigationController?.pushViewController(vc, animated: true)
+                    }
                 }
+              
                 break
             case .failure(let error):
                 error.localizedDescription

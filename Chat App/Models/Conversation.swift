@@ -7,7 +7,6 @@
 
 import Foundation
 struct Conversation {
-    let userOne: String
-    let userTwo: String
+    var lastMessage: Message?
     let createdAt: Date
 }
