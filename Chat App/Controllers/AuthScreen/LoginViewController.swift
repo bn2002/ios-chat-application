@@ -44,7 +44,7 @@ class LoginViewController: UIViewController {
         passwordTextField.resignFirstResponder()
         
         guard let email = emailTextField.text, let password = passwordTextField.text, !email.isEmpty, !password.isEmpty else {
-            loginAlertError()
+            loginAlertError(message: "Hãy nhập đầy đủ thông tin")
             return
         }
         
@@ -56,7 +56,14 @@ class LoginViewController: UIViewController {
                 strongSelf.spinner.dismiss(animated: true)
             }
             
+            guard let result = authResult, error == nil else {
+                print("Fail to login to user: \(email)")
+                strongSelf.loginAlertError(message: "Tài khoản hoặc mật khẩu không chính xác.")
+                return
+            }
+            
             DatabaseManager.shared.getDataFor(path: email) { result in
+               
                 switch result {
                 case .success(let data):
                     guard
@@ -69,23 +76,16 @@ class LoginViewController: UIViewController {
                         return
                     }
                     
-                    print(userData, firstName)
                     break
                 case .failure(let error):
                     print("Login error \(error)")
                     break
                 }
             }
-            guard let result = authResult, error == nil else {
-                print("Fail to login to user: \(email)")
-                return
-            }
-            
+
             UserDefaults.standard.set(email, forKey: "email")
             strongSelf.navigationController?.dismiss(animated: true)
             
-            
-
         }
         
         
@@ -93,8 +93,8 @@ class LoginViewController: UIViewController {
     }
     
     
-    func loginAlertError() {
-        let alert = UIAlertController(title: "Thông báo", message: "Hãy nhập đầy đủ thông tin", preferredStyle: .alert)
+    func loginAlertError(message: String) {
+        let alert = UIAlertController(title: "Thông báo", message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Đóng", style: .cancel))
         present(alert, animated: true)
     }

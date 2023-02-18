@@ -8,6 +8,7 @@
 import UIKit
 import SDWebImage
 import FirebaseAuth
+import JGProgressHUD
 
 class SearchUserViewController: UIViewController {
  
@@ -17,6 +18,7 @@ class SearchUserViewController: UIViewController {
     var searchDelayTimer: Timer?
     var filterList: [User]?
     weak var parentSelf: UIViewController?
+    private let spinner = JGProgressHUD(style: .dark)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -95,14 +97,10 @@ extension SearchUserViewController: UITableViewDelegate, UITableViewDataSource {
               
                 break
             case .failure(let error):
-                error.localizedDescription
+                print(error.localizedDescription)
                 break
             }
         }
-        
-    }
-    
-    func createNewConversation() {
         
     }
     
@@ -114,16 +112,24 @@ extension SearchUserViewController: UISearchBarDelegate {
         self.searchDelayTimer?.invalidate()
         if(searchText.count <= 0) {
             self.filterList?.removeAll()
-            self.tbvSearchResult.reloadData()
+            DispatchQueue.main.async {
+                self.tbvSearchResult.reloadData()
+            }
             return
         }
+        
+        self.spinner.show(in: self.view)
         
         self.searchDelayTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { [weak self] (_) in
             guard let `self` = self else { return }
             DatabaseManager.shared.searchUser(with: searchText) { [weak self] (result) in
                 guard let `self` = self else { return }
                 self.filterList = result
-                self.tbvSearchResult.reloadData()
+                DispatchQueue.main.async {
+                    self.tbvSearchResult.reloadData()
+                    self.spinner.dismiss(animated: true)
+                }
+                
             }
            
         })

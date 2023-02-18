@@ -8,10 +8,13 @@
 import UIKit
 import FirebaseAuth
 import SDWebImage
+import JGProgressHUD
+
 class ConversationsViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     var contacts = [[String:Any]]()
+    private let spinner = JGProgressHUD(style: .dark)
     private var searchBar: UISearchBar {
         let searchBar = UISearchBar()
         searchBar.placeholder = "Nhập tên hoặc địa chỉ email cần tìm"
@@ -24,17 +27,6 @@ class ConversationsViewController: UIViewController {
         validateIsLogin()
         initNavigationItem()
         setUpTableView()
-    }
-    
-    
-    @IBAction func didLogoutPressed(_ sender: Any) {
-        do {
-            try Auth.auth().signOut()
-            validateIsLogin()
-        } catch {
-            print(error.localizedDescription)
-        }
-        
     }
     
     private func validateIsLogin() {
@@ -57,6 +49,7 @@ class ConversationsViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         self.tabBarController?.tabBar.isHidden = false
         if Auth.auth().currentUser != nil {
+            spinner.show(in: view)
             loadContacts()
         }
     }
@@ -72,6 +65,7 @@ class ConversationsViewController: UIViewController {
             self.contacts = await DatabaseManager.shared.fetchContact(email: userEmail!)
             DispatchQueue.main.async {
                 self.tableView.reloadData()
+                self.spinner.dismiss(animated: true)
             }
         }
     }
@@ -104,7 +98,6 @@ extension ConversationsViewController: UITableViewDelegate, UITableViewDataSourc
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        print("Render \(indexPath.row)")
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! ConversationTableViewCell
         let contact = contacts[indexPath.row]
         let photoURL = contact["contactAvatar"] as? String ?? ""
