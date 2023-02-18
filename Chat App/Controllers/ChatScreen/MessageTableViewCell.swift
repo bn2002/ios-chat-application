@@ -9,12 +9,17 @@ import UIKit
 
 class MessageTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var messageBubble: UIView!
     @IBOutlet weak var ivRightAvatar: UIImageView!
     @IBOutlet weak var ivLeftAvatar: UIImageView!
     @IBOutlet weak var messageContent: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        messageBubble.layer.cornerRadius = 10
+        ivRightAvatar.layer.cornerRadius = CGRectGetWidth(ivRightAvatar.frame)/2.0
+        self.ivRightAvatar.layer.masksToBounds = true
+        ivLeftAvatar.layer.cornerRadius = CGRectGetWidth(ivLeftAvatar.frame)/2.0
+        self.ivLeftAvatar.layer.masksToBounds = true
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

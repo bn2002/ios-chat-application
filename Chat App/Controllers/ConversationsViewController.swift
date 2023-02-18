@@ -20,11 +20,10 @@ class ConversationsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = "Chat"
         validateIsLogin()
         initNavigationItem()
         setUpTableView()
-        
-
     }
     
     
@@ -40,6 +39,7 @@ class ConversationsViewController: UIViewController {
     
     private func validateIsLogin() {
         if Auth.auth().currentUser == nil {
+            print("Chưa login, vui lòng đăng nhập")
             let loginVC = LoginViewController()
             let nav = UINavigationController(rootViewController: loginVC)
             nav.modalPresentationStyle = .fullScreen
@@ -55,9 +55,11 @@ class ConversationsViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        loadContacts()
+        self.tabBarController?.tabBar.isHidden = false
+        if Auth.auth().currentUser != nil {
+            loadContacts()
+        }
     }
-    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
@@ -68,7 +70,9 @@ class ConversationsViewController: UIViewController {
         Task {
             let userEmail = Auth.auth().currentUser?.email
             self.contacts = await DatabaseManager.shared.fetchContact(email: userEmail!)
-            tableView.reloadData()
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
         }
     }
     
@@ -99,8 +103,8 @@ extension ConversationsViewController: UITableViewDelegate, UITableViewDataSourc
         return contacts.count
     }
     
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        print("Render \(indexPath.row)")
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! ConversationTableViewCell
         let contact = contacts[indexPath.row]
         let photoURL = contact["contactAvatar"] as? String ?? ""
@@ -108,9 +112,14 @@ extension ConversationsViewController: UITableViewDelegate, UITableViewDataSourc
         cell.lContactName.text = contact["fullname"] as? String ?? ""
         let lastMessage = contact["lastMessage"] as? Message
         if let lastMessage = lastMessage {
-            cell.lContentMessage.text = lastMessage.content
+            if(lastMessage.content.count > 30) {
+                let message = String(lastMessage.content.prefix(29))
+                cell.lContentMessage.text = ("\(message)...")
+            } else {
+                cell.lContentMessage.text = lastMessage.content
+            }
+            
         }
-        
         cell.accessoryType = .disclosureIndicator
         return cell
     }

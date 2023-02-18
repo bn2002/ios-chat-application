@@ -25,6 +25,7 @@ class ChatViewController: UIViewController {
         tbvMessages.delegate = self
         tbvMessages.dataSource = self
         tfMessageInput.delegate = self
+        self.tabBarController?.tabBar.isHidden = true
         let nib = UINib(nibName: "MessageTableViewCell", bundle: .main)
         tbvMessages.register(nib, forCellReuseIdentifier: "cell")
         if let conversationID = conversationID {
@@ -85,7 +86,10 @@ class ChatViewController: UIViewController {
 extension ChatViewController:UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
         print("textFieldDidEndEditing: Sent messages")
-        handleSendMessage(textContent: textField.text!)
+        if let message = textField.text, message.isEmpty == false {
+            handleSendMessage(textContent: message)
+        }
+                
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -156,6 +160,8 @@ extension ChatViewController:UITableViewDelegate, UITableViewDataSource {
         if(currentUser == message.fromUser) {
             vc.ivLeftAvatar.isHidden = true
             vc.ivRightAvatar.isHidden = false
+            vc.messageBubble.backgroundColor = UIColor(named: "BrandPurple")
+            vc.messageContent.textColor = UIColor(named: "BrandLightPurple")
             if let myAvatar = self.myAvatar, myAvatar.isEmpty == false {
                 vc.ivRightAvatar.sd_setImage(with: URL(string: myAvatar), placeholderImage: UIImage(named: "user_avatar.png"))
             }
@@ -163,6 +169,8 @@ extension ChatViewController:UITableViewDelegate, UITableViewDataSource {
         } else {
             vc.ivLeftAvatar.isHidden = false
             vc.ivRightAvatar.isHidden = true
+            vc.messageBubble.backgroundColor = UIColor(named: "BrandBlue")
+            vc.messageContent.textColor = UIColor(named: "BrandLightBlue")
             if let contactAvatar = self.contactAvatar, contactAvatar.isEmpty == false {
                 vc.ivLeftAvatar.sd_setImage(with: URL(string: contactAvatar), placeholderImage: UIImage(named: "user_avatar.png"))
             }

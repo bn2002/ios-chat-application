@@ -15,6 +15,9 @@ class ConversationTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        ivUserAvatar.layer.cornerRadius = CGRectGetWidth(ivUserAvatar.frame)/2.0
+        self.ivUserAvatar.layer.masksToBounds = true
+        
         // Initialization code
     }
 

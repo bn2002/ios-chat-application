@@ -190,7 +190,6 @@ extension DatabaseManager {
                     "fullname": user.firstname + " " + user.lastname,
                     "lastMessage": lastMessage
                 ]
-                print(contact)
                 result.append(contact)
             }
         } catch {

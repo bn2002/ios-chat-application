@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		44A3AFF829A0D7DC0042739E /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A3AFF629A0D7DC0042739E /* ProfileViewController.swift */; };
+		44A3AFF929A0D7DC0042739E /* ProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 44A3AFF729A0D7DC0042739E /* ProfileViewController.xib */; };
 		44C8A7FD299A8FD6007EB92C /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44C8A7FC299A8FD6007EB92C /* Constant.swift */; };
 		6C3D10C421D2EBC5846A03A4 /* Pods_Chat_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 51A8DD1DF968BFA1497B2662 /* Pods_Chat_App.framework */; };
 		8B27407C299B7ABD002525B7 /* MyError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B27407B299B7ABD002525B7 /* MyError.swift */; };
@@ -23,7 +25,6 @@
 		8B5C456E2988F0F800F213EA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8B5C456C2988F0F800F213EA /* LaunchScreen.storyboard */; };
 		8B5C45852988F9A300F213EA /* PhotoViewerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5C45842988F9A300F213EA /* PhotoViewerViewController.swift */; };
 		8B5C45872988F9B800F213EA /* VideoPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5C45862988F9B800F213EA /* VideoPlayerViewController.swift */; };
-		8B5C458B2988FA3300F213EA /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5C458A2988FA3300F213EA /* ProfileViewController.swift */; };
 		8B66C667299F6B1600D1CEFE /* ConversationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B66C665299F6B1600D1CEFE /* ConversationTableViewCell.swift */; };
 		8B66C668299F6B1600D1CEFE /* ConversationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B66C666299F6B1600D1CEFE /* ConversationTableViewCell.xib */; };
 		8B7878C6298913AE003B43FB /* RegisterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B7878C5298913AD003B43FB /* RegisterViewController.xib */; };
@@ -44,6 +45,8 @@
 
 /* Begin PBXFileReference section */
 		2C5886350AEBDFCC2DE6D71D /* Pods-Chat App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chat App.debug.xcconfig"; path = "Target Support Files/Pods-Chat App/Pods-Chat App.debug.xcconfig"; sourceTree = "<group>"; };
+		44A3AFF629A0D7DC0042739E /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		44A3AFF729A0D7DC0042739E /* ProfileViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileViewController.xib; sourceTree = "<group>"; };
 		44C8A7FC299A8FD6007EB92C /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		51A8DD1DF968BFA1497B2662 /* Pods_Chat_App.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Chat_App.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B27407B299B7ABD002525B7 /* MyError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyError.swift; sourceTree = "<group>"; };
@@ -62,7 +65,6 @@
 		8B5C456F2988F0F800F213EA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8B5C45842988F9A300F213EA /* PhotoViewerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoViewerViewController.swift; sourceTree = "<group>"; };
 		8B5C45862988F9B800F213EA /* VideoPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerViewController.swift; sourceTree = "<group>"; };
-		8B5C458A2988FA3300F213EA /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		8B66C665299F6B1600D1CEFE /* ConversationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationTableViewCell.swift; sourceTree = "<group>"; };
 		8B66C666299F6B1600D1CEFE /* ConversationTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConversationTableViewCell.xib; sourceTree = "<group>"; };
 		8B7878C5298913AD003B43FB /* RegisterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RegisterViewController.xib; sourceTree = "<group>"; };
@@ -169,9 +171,10 @@
 				8B5C45652988F0F800F213EA /* ConversationsViewController.swift */,
 				8B5C45842988F9A300F213EA /* PhotoViewerViewController.swift */,
 				8B5C45862988F9B800F213EA /* VideoPlayerViewController.swift */,
-				8B5C458A2988FA3300F213EA /* ProfileViewController.swift */,
 				8BF2F624299A1DE40086B6F3 /* SearchUserViewController.swift */,
 				8BF2F629299A207C0086B6F3 /* SearchUserTableViewCell.swift */,
+				44A3AFF629A0D7DC0042739E /* ProfileViewController.swift */,
+				44A3AFF729A0D7DC0042739E /* ProfileViewController.xib */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -299,6 +302,7 @@
 				8B7878C6298913AE003B43FB /* RegisterViewController.xib in Resources */,
 				8B66C668299F6B1600D1CEFE /* ConversationTableViewCell.xib in Resources */,
 				8B5C456E2988F0F800F213EA /* LaunchScreen.storyboard in Resources */,
+				44A3AFF929A0D7DC0042739E /* ProfileViewController.xib in Resources */,
 				8B5C456B2988F0F800F213EA /* Assets.xcassets in Resources */,
 				8BF2F627299A1E190086B6F3 /* SearchUserViewController.xib in Resources */,
 				8BB28B7F299B6DCF008FACE8 /* MessageTableViewCell.xib in Resources */,
@@ -367,7 +371,6 @@
 				8B274082299B8C2D002525B7 /* Conversation.swift in Sources */,
 				8B5C45622988F0F800F213EA /* AppDelegate.swift in Sources */,
 				8BF2F625299A1DE40086B6F3 /* SearchUserViewController.swift in Sources */,
-				8B5C458B2988FA3300F213EA /* ProfileViewController.swift in Sources */,
 				8B5C45642988F0F800F213EA /* SceneDelegate.swift in Sources */,
 				8BF2F62B299A207C0086B6F3 /* SearchUserTableViewCell.swift in Sources */,
 				8B27407C299B7ABD002525B7 /* MyError.swift in Sources */,
@@ -375,6 +378,7 @@
 				8B5C45852988F9A300F213EA /* PhotoViewerViewController.swift in Sources */,
 				8B66C667299F6B1600D1CEFE /* ConversationTableViewCell.swift in Sources */,
 				8BB28B7E299B6DCF008FACE8 /* MessageTableViewCell.swift in Sources */,
+				44A3AFF829A0D7DC0042739E /* ProfileViewController.swift in Sources */,
 				8BE1C7E729923A22001F3688 /* User.swift in Sources */,
 				8BA1B9FF299A15D300A8B3B9 /* StorageManager.swift in Sources */,
 			);
