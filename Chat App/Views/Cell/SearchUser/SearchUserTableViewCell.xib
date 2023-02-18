@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -17,18 +18,28 @@
                 <rect key="frame" x="0.0" y="0.0" width="350" height="51"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="person" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="ynH-nA-z81">
-                        <rect key="frame" x="7" y="6.6666666666666643" width="48" height="38"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="ynH-nA-z81">
+                        <rect key="frame" x="5" y="6.6666666666666679" width="40" height="37.333333333333336"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="40" id="5Bs-t0-anr"/>
+                            <constraint firstAttribute="height" constant="40" id="nbe-Td-j3m"/>
+                        </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Nguyễn Duy Doanh" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jLk-dB-ZjM">
-                        <rect key="frame" x="63" y="14" width="277" height="22"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                        <nil key="textColor"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nguyễn Duy Doanh" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jLk-dB-ZjM">
+                        <rect key="frame" x="65" y="9.9999999999999982" width="185" height="26.333333333333329"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                        <color key="textColor" name="PrimaryColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
+                <constraints>
+                    <constraint firstItem="ynH-nA-z81" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="5K0-3v-BUx"/>
+                    <constraint firstAttribute="bottom" secondItem="jLk-dB-ZjM" secondAttribute="bottom" constant="10" id="BNE-wt-I57"/>
+                    <constraint firstAttribute="bottom" secondItem="ynH-nA-z81" secondAttribute="bottom" constant="5" id="Lit-up-mdk"/>
+                    <constraint firstItem="ynH-nA-z81" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="5" id="ft5-Gy-lwJ"/>
+                    <constraint firstItem="jLk-dB-ZjM" firstAttribute="leading" secondItem="ynH-nA-z81" secondAttribute="trailing" constant="20" id="lCc-44-PGJ"/>
+                    <constraint firstItem="jLk-dB-ZjM" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="oyu-Sd-u7V"/>
+                </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
@@ -40,5 +51,8 @@
     </objects>
     <resources>
         <image name="person" catalog="system" width="128" height="121"/>
+        <namedColor name="PrimaryColor">
+            <color red="0.18799999356269836" green="0.31400001049041748" blue="0.94099998474121094" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
     </resources>
 </document>

@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -11,6 +12,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ConversationsViewController" customModule="Chat_App" customModuleProvider="target">
             <connections>
+                <outlet property="noConversation" destination="qfE-hF-TtP" id="3C4-zA-cff"/>
                 <outlet property="tableView" destination="hae-QD-bL6" id="9CS-Kl-0kG"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -24,19 +26,30 @@
                     <rect key="frame" x="10" y="89" width="373" height="699"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                 </tableView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bạn chưa có cuộc trò chuyện nào" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qfE-hF-TtP">
+                    <rect key="frame" x="51" y="414" width="291" height="24"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                    <color key="textColor" name="PrimaryColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
+                <constraint firstItem="qfE-hF-TtP" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="FCo-sD-9wn"/>
                 <constraint firstItem="hae-QD-bL6" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="30" id="FOH-Su-AfF"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="hae-QD-bL6" secondAttribute="trailing" constant="10" id="HOu-7P-8bJ"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="hae-QD-bL6" secondAttribute="bottom" constant="30" id="NPI-fc-01q"/>
                 <constraint firstItem="hae-QD-bL6" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="10" id="jW4-T1-N4q"/>
+                <constraint firstItem="qfE-hF-TtP" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="p0s-kU-NF3"/>
             </constraints>
             <point key="canvasLocation" x="140" y="21"/>
         </view>
     </objects>
     <resources>
+        <namedColor name="PrimaryColor">
+            <color red="0.18799999356269836" green="0.31400001049041748" blue="0.94099998474121094" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

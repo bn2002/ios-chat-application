@@ -19,6 +19,10 @@ class ProfileViewController: UIViewController {
         self.title = "Profile"
         userAvatar.layer.cornerRadius = CGRectGetWidth(userAvatar.frame)/2.0
         self.userAvatar.layer.masksToBounds = true
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
         setUserInfo()
     }
     

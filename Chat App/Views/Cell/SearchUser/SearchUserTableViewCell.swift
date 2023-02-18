@@ -14,6 +14,8 @@ class SearchUserTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        userAvatar.layer.cornerRadius = CGRectGetWidth(userAvatar.frame)/2.0
+        self.userAvatar.layer.masksToBounds = true
         // Initialization code
     }
 

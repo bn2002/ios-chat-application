@@ -12,6 +12,8 @@ import JGProgressHUD
 
 class ConversationsViewController: UIViewController {
 
+    @IBOutlet weak var noConversation: UILabel!
+    
     @IBOutlet weak var tableView: UITableView!
     var contacts = [[String:Any]]()
     private let spinner = JGProgressHUD(style: .dark)
@@ -63,10 +65,20 @@ class ConversationsViewController: UIViewController {
         Task {
             let userEmail = Auth.auth().currentUser?.email
             self.contacts = await DatabaseManager.shared.fetchContact(email: userEmail!)
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-                self.spinner.dismiss(animated: true)
+            if self.contacts.count <= 0 {
+                DispatchQueue.main.async {
+                    self.noConversation.isHidden = false
+                    self.tableView.isHidden = true
+                }
+            } else {
+                DispatchQueue.main.async {
+                    self.tableView.isHidden = false
+                    self.noConversation.isHidden = true
+                    self.tableView.reloadData()
+                    
+                }
             }
+            self.spinner.dismiss(animated: true)
         }
     }
     
